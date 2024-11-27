@@ -28,5 +28,19 @@ export const config = (httpServer) => {
                 socket.emit("error-message", { message: error.message });
             }
         });
+
+        // Manejar la eliminación de un producto
+        socket.on("delete-product", async (data) => {
+            try {
+                // Eliminar un producto
+                await productManager.deleteOneById(data.id);
+
+                // Emitir la lista actualizada de productos a todos los clientes
+                socketServer.emit("delete-product", { products: await productManager.getAll() });
+            } catch (error) {
+                // Emitir un mensaje de error al cliente
+                socket.emit("error-message", { message: error.message });
+            }
+        });
     });
 };

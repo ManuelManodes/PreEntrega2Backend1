@@ -42,43 +42,24 @@
 	},
 	{
 		"id": 4,
-		"title": "Teclado Mecánico",
-		"description": "Teclado mecánico RGB con switches personalizables.",
-		"code": "KEY001",
-		"price": 120.5,
-		"status": true,
-		"stock": 30,
-		"category": "Periféricos",
-		"thumbnails": [
-			"keyboard1.jpg",
-			"keyboard2.jpg"
-		]
-	},
-	{
-		"id": 5,
-		"title": "Mouse Inalámbrico",
-		"description": "Mouse ergonómico con conectividad Bluetooth y batería recargable.",
-		"code": "MOUSE001",
-		"price": 45.99,
-		"status": true,
-		"stock": 50,
-		"category": "Periféricos",
-		"thumbnails": [
-			"mouse1.jpg",
-			"mouse2.jpg"
-		]
-	},
-	{
-		"id": 6,
-		"title": "Iphone chino 22x plus",
-		"description": "Equipo de composición alternativo fabricado en China",
-		"code": "IP004",
-		"price": 12,
+		"title": "Iphone 99 ProMax",
+		"description": "Iphone de dudosa procedencia fabricado en la nación comunista de China bajo cuestionables jornadas de trabajo.",
+		"code": "IP0099",
+		"price": 90,
 		"status": true,
 		"stock": 100,
 		"category": "Teléfonos",
-		"thumbnails": [
-			""
-		]
+		"thumbnails": []
+	},
+	{
+		"id": 6,
+		"title": "Teclado mecánico edición EVA00",
+		"description": "Teclado Gamer RGB Óptico ROG Strix Scope RX EVA-02 Edition, para jugadores de FPS, con diseño inspirado en EVA, switches mecánicos ópticos ROG RX, iluminación RGB Aura Sync integral, resistencia al agua y al polvo IP57, passthrough USB 2.0 y placa superior de aleación.",
+		"code": "EV001",
+		"price": 500,
+		"status": true,
+		"stock": 100,
+		"category": "Periféricos",
+		"thumbnails": []
 	}
 ]
