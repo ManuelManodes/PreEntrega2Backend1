@@ -131,3 +131,20 @@ tr:last-child td {
         width: 100%;
     }
 }
+
+/* Clase compartida para botones */
+.button-style {
+    width: 25%;
+    padding: 12px; /* Usa el mismo padding */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.button-style:hover {
+    background-color: #45a049;
+}
