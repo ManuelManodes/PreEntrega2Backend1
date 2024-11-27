@@ -1,0 +1,57 @@
+[
+	{
+		"id": 1,
+		"title": "Laptop Gamer",
+		"description": "Laptop de alto rendimiento para videojuegos y trabajos exigentes.",
+		"code": "LAP001",
+		"price": 2000,
+		"status": true,
+		"stock": 50,
+		"category": "Computadoras",
+		"thumbnails": [
+			"laptop1.jpg",
+			"laptop2.jpg"
+		]
+	},
+	{
+		"id": 2,
+		"title": "Smartphone Pro",
+		"description": "Smartphone con cámara avanzada y pantalla de alta resolución.",
+		"code": "SMT001",
+		"price": 999,
+		"status": true,
+		"stock": 40,
+		"category": "Teléfonos",
+		"thumbnails": [
+			"smartphone1.jpg"
+		]
+	},
+	{
+		"id": 3,
+		"title": "Auriculares Inalámbricos",
+		"description": "Auriculares con cancelación de ruido y excelente calidad de sonido.",
+		"code": "AUD001",
+		"price": 199.99,
+		"status": true,
+		"stock": 100,
+		"category": "Accesorios",
+		"thumbnails": [
+			"headphones1.jpg",
+			"headphones2.jpg"
+		]
+	},
+	{
+		"id": 4,
+		"title": "Teclado Mecánico",
+		"description": "Teclado mecánico RGB con switches personalizables.",
+		"code": "KEY001",
+		"price": 120.5,
+		"status": true,
+		"stock": 30,
+		"category": "Periféricos",
+		"thumbnails": [
+			"keyboard1.jpg",
+			"keyboard2.jpg"
+		]
+	}
+]
