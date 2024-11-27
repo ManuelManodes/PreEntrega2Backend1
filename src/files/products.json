@@ -53,5 +53,32 @@
 			"keyboard1.jpg",
 			"keyboard2.jpg"
 		]
+	},
+	{
+		"id": 5,
+		"title": "Mouse Inalámbrico",
+		"description": "Mouse ergonómico con conectividad Bluetooth y batería recargable.",
+		"code": "MOUSE001",
+		"price": 45.99,
+		"status": true,
+		"stock": 50,
+		"category": "Periféricos",
+		"thumbnails": [
+			"mouse1.jpg",
+			"mouse2.jpg"
+		]
+	},
+	{
+		"id": 6,
+		"title": "Iphone chino 22x plus",
+		"description": "Equipo de composición alternativo fabricado en China",
+		"code": "IP004",
+		"price": 12,
+		"status": true,
+		"stock": 100,
+		"category": "Teléfonos",
+		"thumbnails": [
+			""
+		]
 	}
 ]

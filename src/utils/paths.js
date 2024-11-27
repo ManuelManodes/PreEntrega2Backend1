@@ -14,6 +14,8 @@ const paths = {
     public: path.join(SRC_PATH, "public"), // Ruta de la raíz del directorio de archivos estáticos
     images: path.join(SRC_PATH, "public", "images"), // Ruta del directorio de imágenes
     files: path.join(SRC_PATH, "files"), // Ruta del directorio de archivos privados
+    views: path.join(SRC_PATH, "views"), // Ruta del vistas de Handlebars
+
 };
 
 export default paths;

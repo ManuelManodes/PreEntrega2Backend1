@@ -1,0 +1,133 @@
+/* main.css */
+
+/* Estilos Globales */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+h1 {
+    color: rgb(218, 218, 218);
+}
+
+header {
+    background-color: #3a444e;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    max-width: 1200px; /* Aumentado para más espacio */
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+section {
+    padding: 1.5rem;
+    max-width: 1000px; /* Aumentado para más espacio */
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+h3 {
+    margin-bottom: 1rem;
+    color: #3a444e;
+    text-align: left; /* Cambiado a izquierda */
+}
+
+/* Estilos para la tabla */
+table {
+    border-collapse: separate; /* Cambiado de collapse a separate */
+    border-spacing: 0; /* Asegura que no haya espacio entre celdas */
+    width: 100%;
+    border: 1px solid rgb(145, 144, 144);
+    border-radius: 10px; /* Añade esquinas redondeadas */
+    overflow: hidden; /* Para que las esquinas afecten al contenido interno */
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(145, 144, 144); /* Añade borde inferior */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:last-child td {
+    border-bottom: none; /* Elimina el borde inferior en la última fila */
+}
+
+/* Estilos para el formulario */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 40%; /* Reducir tamaño */
+    padding: 6px; /* Reducir padding */
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Borde claro */
+    border-radius: 8px; /* Borde redondeado */
+    font-family: Arial, sans-serif; /* Asegura la misma fuente */
+    font-size: 14px; /* Asegura el mismo tamaño */
+}
+
+.form-group input[type="checkbox"] {
+    margin-left: 5px;
+}
+
+.form-group input[type="submit"] {
+    width: 25%;
+    padding: 12px; /* Reducir padding */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px; /* Borde redondeado */
+    cursor: pointer;
+    font-family: Arial, sans-serif; /* Asegura la misma fuente */
+    font-size: 14px; /* Asegura el mismo tamaño */
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group textarea,
+    .form-group input[type="submit"] {
+        width: 100%;
+    }
+}

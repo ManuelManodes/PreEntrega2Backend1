@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Productos en tiempo real</title>
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <h1>Home - Productos en tiempo real</h1>
+    </header>
+
+    <main>
+        <section>
+            <h3>Productos</h3>
+            <div>
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Código</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <!-- Eliminamos la columna de Imágenes -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se agregarán las filas de productos -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section>
+            <h3>Formulario de Productos</h3>
+            <form id="products-form">
+                <div class="form-group">
+                    <label for="title">Nombre:</label>
+                    <input type="text" id="title" name="title" placeholder="Ingrese el nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" name="description" placeholder="Ingrese la descripción" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="code">Código:</label>
+                    <input type="text" id="code" name="code" placeholder="Ingrese el código único" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Precio:</label>
+                    <input type="number" id="price" name="price" placeholder="Ingrese el precio" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" id="stock" name="stock" placeholder="Ingrese el stock" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoría:</label>
+                    <input type="text" id="category" name="category" placeholder="Ingrese la categoría" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">¿Está activo?</label>
+                    <input type="checkbox" id="status" name="status">
+                </div>
+                <div class="form-group">
+                    <label for="thumbnails">Imágenes (URLs, separadas por comas):</label>
+                    <input type="text" id="thumbnails" name="thumbnails" placeholder="Ingrese URLs de imágenes">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar">
+                </div>
+                <p id="error-message"></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- Incluye los scripts necesarios -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/api/public/js/products.socket.js"></script>
+</body>
+</html>
