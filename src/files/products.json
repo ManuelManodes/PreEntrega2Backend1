@@ -61,5 +61,16 @@
 		"stock": 100,
 		"category": "Periféricos",
 		"thumbnails": []
+	},
+	{
+		"id": 7,
+		"title": "Mouse gamer inalámbrico",
+		"description": "Razer Viper V3 HyperSpeed - Mouse inalámbrico para juegos de deportes electrónicos: peso ligero de 2.89 oz - Batería de hasta 280 horas - Sensor óptico de 30 K DPI - Interruptores mecánicos Gen-2 - 8",
+		"code": "MG0023",
+		"price": 90,
+		"status": true,
+		"stock": 25,
+		"category": "Periféricos",
+		"thumbnails": []
 	}
 ]

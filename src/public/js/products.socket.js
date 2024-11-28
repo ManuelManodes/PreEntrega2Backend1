@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             errorMessage.style.color = "";
         }
 
-        // Validación básica de campos (puedes extenderla según tus necesidades)
+        // Validación de campos
         const title = formData.get("title").trim();
         const description = formData.get("description").trim();
         const code = formData.get("code").trim();
