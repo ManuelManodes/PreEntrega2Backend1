@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Selección de elementos del DOM
     const productsTableBody = document.querySelector("#products-table tbody");
     const productsForm = document.getElementById("products-form");
-    const errorMessage = document.getElementById("error-message"); // Mensajes del formulario de ingreso
-    const deleteErrorMessage = document.getElementById("delete-error-message"); // Mensajes del formulario de eliminación
+    const errorMessage = document.getElementById("error-message"); 
+    const deleteErrorMessage = document.getElementById("delete-error-message");
     const inputProductId = document.getElementById("input-product-id");
     const btnDeleteProduct = document.getElementById("btn-delete-product");
 
@@ -16,30 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmDeleteYes = document.getElementById("confirm-delete-yes");
     const confirmDeleteNo = document.getElementById("confirm-delete-no");
 
-    let productIdToDelete = null; // Variable para almacenar el ID del producto a eliminar
+    let productIdToDelete = null; 
 
-    /**
-     * Función para abrir el modal de confirmación
-     */
     const openModal = () => {
         confirmDeleteModal.style.display = "block";
-        confirmDeleteYes.focus(); // Enfoca el botón "Sí" al abrir el modal
+        confirmDeleteYes.focus();
     };
 
-    /**
-     * Función para cerrar el modal de confirmación
-     */
     const closeModal = () => {
         confirmDeleteModal.style.display = "none";
-        btnDeleteProduct.focus(); // Devuelve el enfoque al botón de eliminar
+        btnDeleteProduct.focus();
     };
 
-    /**
-     * Manejar el envío del formulario de ingreso de productos
-     */
+
     productsForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        console.log("Formulario de productos enviado"); // Log de depuración
+        console.log("Formulario de productos enviado");
         const formData = new FormData(productsForm);
 
         // Limpia mensajes anteriores
@@ -72,22 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
             stock,
             category,
             status,
-            // thumbnails: formData.get("thumbnails") ? formData.get("thumbnails").split(",") : [],
         });
 
-        console.log("Evento 'insert-product' emitido"); // Log de depuración
+        console.log("Evento 'insert-product' emitido");
     });
 
-    /**
-     * Evento para confirmar que el producto fue agregado
-     */
+
     socket.on("product-inserted", (newProduct) => {
         if (errorMessage) {
             errorMessage.innerText = "Producto agregado correctamente.";
-            errorMessage.style.color = "green"; // Mensaje de éxito
+            errorMessage.style.color = "green";
         }
 
-        // Optimiza la inserción en el DOM usando Document Fragment
         const fragment = document.createDocumentFragment();
         const row = document.createElement("tr");
 
@@ -105,16 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
         fragment.appendChild(row);
         productsTableBody.appendChild(fragment);
 
-        // Resetear el formulario después de una inserción exitosa
+
         productsForm.reset();
     });
 
-    /**
-     * Manejar la eliminación de un producto con confirmación mediante modal
-     */
     btnDeleteProduct.addEventListener("click", () => {
-        const id = inputProductId.value.trim(); // Elimina espacios en blanco
-        // Limpia mensajes anteriores
+        const id = inputProductId.value.trim();
         if (errorMessage) {
             errorMessage.innerText = "";
             errorMessage.style.color = "";
@@ -125,8 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (id && parseInt(id, 10) > 0) {
-            productIdToDelete = id; // Almacena el ID para usarlo tras la confirmación
-            openModal(); // Abre el modal de confirmación
+            productIdToDelete = id; 
+            openModal(); 
         } else {
             if (deleteErrorMessage) {
                 deleteErrorMessage.innerText = "Por favor, ingresa un ID válido.";
@@ -135,30 +119,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /**
-     * Manejar la confirmación de eliminación (Sí)
-     */
+
     confirmDeleteYes.addEventListener("click", () => {
         if (productIdToDelete) {
             socket.emit("delete-product", { id: productIdToDelete });
-            // Limpia el campo después de la confirmación
+
             inputProductId.value = "";
             productIdToDelete = null;
-            closeModal(); // Cierra el modal
+            closeModal();
         }
     });
 
-    /**
-     * Manejar la cancelación de eliminación (No)
-     */
     confirmDeleteNo.addEventListener("click", () => {
         productIdToDelete = null;
-        closeModal(); // Cierra el modal
+        closeModal(); 
     });
 
-    /**
-     * Cerrar el modal si el usuario hace clic fuera del contenido del modal
-     */
     window.addEventListener("click", (event) => {
         if (event.target === confirmDeleteModal) {
             productIdToDelete = null;
@@ -166,16 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /**
-     * Confirmar que el producto fue eliminado
-     */
     socket.on("product-deleted", (deletedProductId) => {
         if (deleteErrorMessage) {
             deleteErrorMessage.innerText = "Producto eliminado correctamente.";
             deleteErrorMessage.style.color = "green";
         }
 
-        // Buscar y remover la fila correspondiente al producto eliminado
         const rowToDelete = Array.from(productsTableBody.rows).find(
             row => row.cells[0].textContent == deletedProductId
         );
@@ -184,11 +156,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /**
-     * Manejar mensajes de error desde el servidor
-     */
     socket.on("error-message", (data) => {
-        if (data.context === "insert") { // Suponiendo que el servidor envía un contexto
+        if (data.context === "insert") {
             if (errorMessage) {
                 errorMessage.innerText = data.message;
                 errorMessage.style.color = "red";
@@ -198,7 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteErrorMessage.innerText = data.message;
                 deleteErrorMessage.style.color = "red";
             }
-        } else { // General
+        } else {
+            console.log("Recibido error general. Contexto:", data.context);
+
             if (errorMessage) {
                 errorMessage.innerText = data.message;
                 errorMessage.style.color = "red";
@@ -210,12 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /**
-     * Escuchar la lista inicial de productos (si es necesario)
-     * Nota: Considera unificar este evento con 'products-list' para evitar redundancias
-     */
     socket.on("initialProducts", (products) => {
-        productsTableBody.innerHTML = ""; // Limpiar tabla
+        productsTableBody.innerHTML = "";
 
         const fragment = document.createDocumentFragment();
 
@@ -237,13 +204,10 @@ document.addEventListener("DOMContentLoaded", () => {
         productsTableBody.appendChild(fragment);
     });
 
-    /**
-     * Escuchar la lista de productos desde el servidor
-     * Este evento puede ser utilizado para actualizar dinámicamente la lista de productos
-     */
+
     socket.on("products-list", (data) => {
         const products = data.products || [];
-        productsTableBody.innerHTML = ""; // Limpia el contenido actual del tbody
+        productsTableBody.innerHTML = "";
 
         const fragment = document.createDocumentFragment();
 

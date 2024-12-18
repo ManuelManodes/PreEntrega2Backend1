@@ -16,7 +16,6 @@ const app = express();
 const PORT = 8080;
 
 // Declaración de archivos estáticos desde la carpeta 'public'
-// en la ruta 'http://localhost:8080/api/public'
 app.use("/api/public", express.static("./src/public"));
 
 // Middleware para acceder al contenido de formularios codificados en URL

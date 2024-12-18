@@ -7,169 +7,164 @@ import ErrorManager from "./ErrorManager.js";
 
 // Definición de la clase SkuManager para gestionar los SKUs
 export default class SkuManager {
-    // Propiedades privadas de la clase
     #jsonFilename;
     #skus;
 
     // Constructor de la clase
     constructor() {
-        this.#jsonFilename = "sku.json"; // Archivo donde se almacenan los SKUs
+        this.#jsonFilename = "sku.json"; 
     }
 
     /**
      * Método privado para encontrar un SKU por su ID
-     * @param {number|string} id - ID del SKU a buscar
-     * @returns {object} - SKU encontrado
-     * @throws {ErrorManager} - Si el SKU no se encuentra
+     * @param {number|string} id 
+     * @returns {object} 
+     * @throws {ErrorManager} 
      */
     async #findOneById(id) {
-        this.#skus = await this.getAll(); // Obtiene todos los SKUs
-        const skuFound = this.#skus.find((item) => item.id === Number(id)); // Asegura que el ID sea numérico y busca el SKU
+        this.#skus = await this.getAll(); 
+        const skuFound = this.#skus.find((item) => item.id === Number(id)); 
 
         if (!skuFound) {
-            throw new ErrorManager("ID no encontrado", 404); // Lanza error si no se encuentra el SKU
+            throw new ErrorManager("ID no encontrado", 404); 
         }
 
-        return skuFound; // Retorna el SKU encontrado
+        return skuFound;
     }
 
     /**
      * Método para obtener todos los SKUs
-     * @returns {Array} - Lista de todos los SKUs
-     * @throws {ErrorManager} - Si hay un error al leer el archivo
+     * @returns {Array} 
+     * @throws {ErrorManager} 
      */
     async getAll() {
         try {
-            this.#skus = await readJsonFile(paths.files, this.#jsonFilename); // Lee el archivo de SKUs
-            return this.#skus; // Retorna la lista de SKUs
+            this.#skus = await readJsonFile(paths.files, this.#jsonFilename); 
+            return this.#skus; 
         } catch (error) {
-            throw new ErrorManager(error.message, error.code); // Lanza error si falla la lectura
+            throw new ErrorManager(error.message, error.code); 
         }
     }
 
     /**
      * Método para obtener un SKU específico por su ID
-     * @param {number|string} id - ID del SKU a obtener
-     * @returns {object} - SKU encontrado
-     * @throws {ErrorManager} - Si el SKU no se encuentra o hay otro error
+     * @param {number|string} id 
+     * @returns {object} 
+     * @throws {ErrorManager} 
      */
     async getOneById(id) {
         try {
-            const skuFound = await this.#findOneById(id); // Utiliza el método privado para encontrar el SKU
-            return skuFound; // Retorna el SKU encontrado
+            const skuFound = await this.#findOneById(id); 
+            return skuFound; 
         } catch (error) {
-            throw new ErrorManager(error.message, error.code); // Propaga el error
+            throw new ErrorManager(error.message, error.code); 
         }
     }
 
     /**
      * Método para insertar un nuevo SKU
-     * @param {object} data - Datos del SKU a insertar
-     * @param {string} data.nombre_sku - Nombre del SKU
-     * @param {number} data.precio - Precio del SKU
-     * @param {string|boolean} data.disponibilidad - Disponibilidad del SKU (puede ser string o booleano)
-     * @param {object} [file] - Archivo de imagen asociado al SKU
-     * @param {string} file.filename - Nombre del archivo de imagen
-     * @returns {object} - Nuevo SKU creado
-     * @throws {ErrorManager} - Si faltan datos obligatorios o hay otro error
+     * @param {object} data 
+     * @param {string} data.nombre_sku 
+     * @param {number} data.precio 
+     * @param {string|boolean} data.disponibilidad 
+     * @param {object} [file] 
+     * @param {string} file.filename 
+     * @returns {object} 
+     * @throws {ErrorManager} 
      */
     async insertOne(data, file) {
         try {
-            const { nombre_sku, precio, disponibilidad } = data; // Desestructura los datos del SKU
+            const { nombre_sku, precio, disponibilidad } = data; 
 
-            // Verifica que todos los datos obligatorios estén presentes
             if (!nombre_sku || !precio || !disponibilidad) {
-                throw new ErrorManager("Faltan datos obligatorios", 400); // Lanza error si faltan datos
+                throw new ErrorManager("Faltan datos obligatorios", 400); 
             }
 
             // Crea el nuevo SKU con un ID único y formatea los datos
             const sku = {
-                id: generateId(await this.getAll()), // Autogenera el ID único
-                nombre_sku, // Asigna el nombre del SKU
-                precio: Number(precio), // Asegura que el precio sea numérico
-                disponibilidad: convertToBoolean(disponibilidad), // Convierte disponibilidad a booleano
-                thumbnail: file?.filename, // Asigna el nombre del archivo de imagen si existe
+                id: generateId(await this.getAll()), 
+                nombre_sku,
+                precio: Number(precio),
+                disponibilidad: convertToBoolean(disponibilidad), 
+                thumbnail: file?.filename, 
             };
 
-            this.#skus.push(sku); // Agrega el nuevo SKU a la lista
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus); // Guarda los SKUs actualizados en el archivo
+            this.#skus.push(sku); 
+            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus); 
 
-            return sku; // Retorna el nuevo SKU
+            return sku; 
         } catch (error) {
-            // Si hay un archivo asociado y ocurre un error, elimina el archivo para evitar archivos huérfanos
+       
             if (file?.filename) await deleteFile(paths.images, file.filename);
-            throw new ErrorManager(error.message, error.code); // Lanza el error
+            throw new ErrorManager(error.message, error.code); 
         }
     }
 
     /**
      * Método para actualizar un SKU existente por su ID
-     * @param {number|string} id - ID del SKU a actualizar
-     * @param {object} data - Datos a actualizar del SKU
-     * @param {string} [data.nombre_sku] - Nuevo nombre del SKU
-     * @param {number} [data.precio] - Nuevo precio del SKU
-     * @param {string|boolean} [data.disponibilidad] - Nueva disponibilidad del SKU
-     * @param {object} [file] - Nuevo archivo de imagen asociado al SKU
-     * @param {string} file.filename - Nombre del nuevo archivo de imagen
-     * @returns {object} - SKU actualizado
-     * @throws {ErrorManager} - Si el SKU no se encuentra o hay otro error
+     * @param {number|string} id 
+     * @param {object} data 
+     * @param {string} [data.nombre_sku] 
+     * @param {number} [data.precio] 
+     * @param {string|boolean} [data.disponibilidad] 
+     * @param {object} [file] 
+     * @param {string} file.filename 
+     * @returns {object} 
+     * @throws {ErrorManager} 
      */
     async updateOneById(id, data, file) {
         try {
-            const { nombre_sku, precio, disponibilidad } = data; // Desestructura los datos a actualizar
-            const skuFound = await this.#findOneById(id); // Busca el SKU por ID
+            const { nombre_sku, precio, disponibilidad } = data; 
+            const skuFound = await this.#findOneById(id); 
 
-            // Crea el objeto SKU actualizado combinando los datos existentes con los nuevos datos proporcionados
             const sku = {
-                id: skuFound.id, // Asegura que el ID no se modifica
-                nombre_sku: nombre_sku || skuFound.nombre_sku, // Actualiza el nombre si se proporciona
-                precio: precio ? Number(precio) : skuFound.precio, // Actualiza el precio si se proporciona
-                disponibilidad: disponibilidad ? convertToBoolean(disponibilidad) : skuFound.disponibilidad, // Actualiza la disponibilidad si se proporciona
-                thumbnail: file?.filename || skuFound.thumbnail, // Actualiza el thumbnail si se proporciona un nuevo archivo
+                id: skuFound.id, 
+                nombre_sku: nombre_sku || skuFound.nombre_sku, 
+                precio: precio ? Number(precio) : skuFound.precio, 
+                disponibilidad: disponibilidad ? convertToBoolean(disponibilidad) : skuFound.disponibilidad, 
+                thumbnail: file?.filename || skuFound.thumbnail, 
             };
 
-            const index = this.#skus.findIndex((item) => item.id === Number(id)); // Encuentra el índice del SKU en la lista
+            const index = this.#skus.findIndex((item) => item.id === Number(id)); 
 
-            // Validar que el índice es válido
             if (index === -1) {
-                throw new ErrorManager("ID no encontrado para actualizar", 404); // Lanza error si no se encuentra
+                throw new ErrorManager("ID no encontrado para actualizar", 404); 
             }
 
-            this.#skus[index] = sku; // Actualiza el SKU en la lista
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus); // Guarda los SKUs actualizados en el archivo
+            this.#skus[index] = sku; 
+            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus);
 
-            // Si se proporciona un nuevo archivo y el thumbnail ha cambiado, elimina el archivo antiguo
             if (file?.filename && sku.thumbnail !== skuFound.thumbnail) {
                 await deleteFile(paths.images, skuFound.thumbnail);
             }
 
-            return sku; // Retorna el SKU actualizado
+            return sku;
         } catch (error) {
-            // Si hay un archivo nuevo y ocurre un error, elimina el archivo para evitar archivos huérfanos
+
             if (file?.filename) await deleteFile(paths.images, file.filename);
-            throw new ErrorManager(error.message, error.code); // Lanza el error
+            throw new ErrorManager(error.message, error.code);
         }
     }
 
     /**
      * Método para eliminar un SKU por su ID
-     * @param {number|string} id - ID del SKU a eliminar
-     * @throws {ErrorManager} - Si el SKU no se encuentra o hay otro error
+     * @param {number|string} id 
+     * @throws {ErrorManager} 
      */
     async deleteOneById(id) {
         try {
-            const skuFound = await this.#findOneById(id); // Busca el SKU por ID
+            const skuFound = await this.#findOneById(id); 
 
-            // Si el SKU tiene un thumbnail asociado, elimina el archivo de imagen
+
             if (skuFound.thumbnail) {
                 await deleteFile(paths.images, skuFound.thumbnail);
             }
 
-            const index = this.#skus.findIndex((item) => item.id === Number(id)); // Encuentra el índice del SKU en la lista
+            const index = this.#skus.findIndex((item) => item.id === Number(id)); 
             this.#skus.splice(index, 1); // Elimina el SKU de la lista
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus); // Guarda los SKUs actualizados en el archivo
+            await writeJsonFile(paths.files, this.#jsonFilename, this.#skus); 
         } catch (error) {
-            throw new ErrorManager(error.message, error.code); // Lanza el error
+            throw new ErrorManager(error.message, error.code); 
         }
     }
 }

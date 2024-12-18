@@ -27,8 +27,8 @@ export const writeJsonFile = async (filepath, filename, content) => {
 
     try {
         const fullPath = path.join(filepath, filename);
-        console.log(`Escribiendo en: ${fullPath}`);  // Muestra la ruta completa
-        console.log(`Contenido a escribir:`, content);  // Muestra los datos que se intentan guardar
+        console.log(`Escribiendo en: ${fullPath}`); 
+        console.log(`Contenido a escribir:`, content); 
         await fs.promises.writeFile(fullPath, JSON.stringify(content, null, "\t"), "utf8");
     } catch (error) {
         console.error(`Error al escribir en el archivo ${filename}:`, error);
